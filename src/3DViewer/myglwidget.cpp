@@ -9,6 +9,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
   backColor = QColor(Qt::white);
   dothSize = 3.0f;
   lineSize = 2.0f;
+  dothType = 0;
 }
 
 void MyGLWidget::initializeGL() {
@@ -63,20 +64,37 @@ void MyGLWidget::setModel(struct Model *model) {
 
 void MyGLWidget::drawModel(struct Model *model) {
   // Рисование по точкам
-  glColor4f(dothColor.redF(), dothColor.greenF(), dothColor.blueF(),
-            dothColor.alphaF());
-  // glPointSize(3.0f);
-  glPointSize(dothSize);
-  glBegin(GL_POINTS);
-  for (int i = 0; i < model->numVertices; i++) {
-    glVertex3f(model->vertices[i].x, model->vertices[i].y,
-               model->vertices[i].z);
+  if (dothType == 1) {
+    glEnable(GL_POINT_SMOOTH);
+  } else if (dothType == 2) {
+    glDisable(GL_POINT_SMOOTH);
   }
-  glEnd();
+
+  if (dothType != 0) {
+    glColor4f(dothColor.redF(), dothColor.greenF(), dothColor.blueF(),
+              dothColor.alphaF());
+    glPointSize(dothSize);
+    glBegin(GL_POINTS);
+    for (int i = 0; i < model->numVertices; i++) {
+      glVertex3f(model->vertices[i].x, model->vertices[i].y,
+                 model->vertices[i].z);
+    }
+    glEnd();
+  }
 
   // Рисование по линиям
   glColor4f(lineColor.redF(), lineColor.greenF(), lineColor.blueF(),
             lineColor.alphaF());
+
+  if (lineType == 0) {
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(1, 0xFFFF);
+  } else if (lineType == 1) {
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(5, 0xAAAA);
+  } else {
+    glDisable(GL_LINE_STIPPLE);
+  }
 
   glLineWidth(lineSize);
   glBegin(GL_LINES);

@@ -285,3 +285,15 @@ void MainWindow::on_sizeBox_valueChanged(double arg1) {
   myGLWidget->setModel(m_model);
   myGLWidget->paintGL();
 }
+
+void MainWindow::on_typeLine_currentIndexChanged(int index) {
+  myGLWidget->lineType = index;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
+
+void MainWindow::on_typeDoth_currentIndexChanged(int index) {
+  myGLWidget->dothType = index;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}

@@ -47,12 +47,14 @@ class MainWindow : public QMainWindow {
   void on_thicknessBox_valueChanged(double arg1);
   void on_sizeBox_valueChanged(double arg1);
 
- private:
+  void on_typeLine_currentIndexChanged(int index);
+  void on_typeDoth_currentIndexChanged(int index);
+
+private:
   Ui::MainWindow *ui;
   QTimer *timer;
   MyGLWidget *myGLWidget;
   QString fileName;
-  QMovie movie;
   struct Model *m_model;
 };
 
