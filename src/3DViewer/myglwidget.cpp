@@ -3,13 +3,22 @@
 #include "mainwindow.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
-    : QOpenGLWidget(parent), m_model(nullptr) {}
+    : QOpenGLWidget(parent), m_model(nullptr) {
+  lineColor = QColor(Qt::red);
+  dothColor = QColor(Qt::blue);
+  backColor = QColor(Qt::white);
+  dothSize = 3.0f;
+  lineSize = 2.0f;
+  dothType = 0;
+}
 
 void MyGLWidget::initializeGL() {
   QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
   f->initializeOpenGLFunctions();
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  // proection_type = ;
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(),
+               dothColor.alphaF());
+
+  // proection_type = PERSP;
 }
 
 void MyGLWidget::resizeGL(int width, int height) {
@@ -46,10 +55,11 @@ void MyGLWidget::update_proection_GL(GLdouble aspect) {
 }
 
 void MyGLWidget::paintGL() {
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(),
+               dothColor.alphaF());
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (m_model) {
     glEnable(GL_DEPTH_TEST);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     drawModel(m_model);
     glDisable(GL_DEPTH_TEST);
@@ -73,18 +83,39 @@ void MyGLWidget::setModel(struct Model *model) {
 
 void MyGLWidget::drawModel(struct Model *model) {
   // Рисование по точкам
-  glColor3f(0.0f, 0.0f, 1.0f);
-  glPointSize(3.0f);
-  glBegin(GL_POINTS);
-  for (int i = 0; i < model->numVertices; i++) {
-    glVertex3f(model->vertices[i].x, model->vertices[i].y,
-               model->vertices[i].z);
+  if (dothType == 1) {
+    glEnable(GL_POINT_SMOOTH);
+  } else if (dothType == 2) {
+    glDisable(GL_POINT_SMOOTH);
   }
-  glEnd();
+
+  if (dothType != 0) {
+    glColor4f(dothColor.redF(), dothColor.greenF(), dothColor.blueF(),
+              dothColor.alphaF());
+    glPointSize(dothSize);
+    glBegin(GL_POINTS);
+    for (int i = 0; i < model->numVertices; i++) {
+      glVertex3f(model->vertices[i].x, model->vertices[i].y,
+                 model->vertices[i].z);
+    }
+    glEnd();
+  }
 
   // Рисование по линиям
-  glColor3f(1.0f, 0.0f, 0.0f);
-  glLineWidth(2.0f);
+  glColor4f(lineColor.redF(), lineColor.greenF(), lineColor.blueF(),
+            lineColor.alphaF());
+
+  if (lineType == 0) {
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(1, 0xFFFF);
+  } else if (lineType == 1) {
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(5, 0xAAAA);
+  } else {
+    glDisable(GL_LINE_STIPPLE);
+  }
+
+  glLineWidth(lineSize);
   glBegin(GL_LINES);
 
   for (int i = 0; i < model->numSurfaces; i++) {

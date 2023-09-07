@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+
 #include "../viewer.c"
 #include "gif.h"
 #include "ui_mainwindow.h"
@@ -158,26 +159,6 @@ void MainWindow::on_translationBox_activated() {
 
 void MainWindow::on_rotateBox_activated() { on_rotateSlider_valueChanged(); }
 
-void MainWindow::on_colorButton_clicked() {
-  QColorDialog dialog(this);
-  QColor initialColor =
-      ui->colorButton->palette().color(QWidget::backgroundRole());
-  initialColor.setHsv(initialColor.hue(), initialColor.saturation(), 255);
-  dialog.setCurrentColor(initialColor);
-
-  if (dialog.exec() == QColorDialog::Accepted) {
-    QColor color = dialog.selectedColor();
-    QString styleSheet = QString("background-color: %1").arg(color.name());
-    ui->colorButton->setStyleSheet(styleSheet);
-    ui->colorButton->setAutoFillBackground(true);
-
-    //    // Вызов функции changeLineColor
-    //    MyGLWidget* glWidget = findChild<MyGLWidget*>("myGLWidget");
-    //    glWidget->changeLineColor(color.redF(), color.greenF(),
-    //    color.blueF());
-  }
-}
-
 void MainWindow::on_saveButton_gif_clicked() {
   ui->saveButton_gif->setText("REC...");
   ui->saveButton_gif->setDisabled(1);
@@ -191,7 +172,7 @@ void MainWindow::on_saveButton_gif_clicked() {
 void MainWindow::recordGif() {
   static int count = 0;
   if (count < 50) {
-    QPixmap pixmap = ui->verticalWidget->grab();
+    QPixmap pixmap = ui->screen->grab();
     QImage image = pixmap.toImage().scaled(640, 480, Qt::IgnoreAspectRatio);
     image.save("tmp/" + QString::number(count) + ".bmp");
     count++;
@@ -209,7 +190,7 @@ void MainWindow::on_saveButton_img_clicked() {
       this, "Save Image", QString(), "BMP (*.bmp);;JPEG (*.jpg *.jpeg)");
 
   if (!imagePath.isEmpty()) {
-    QImage image = ui->verticalWidget->grab().toImage();
+    QImage image = ui->screen->grab().toImage();
 
     // Сохранение изображения в формате BMP
     if (imagePath.endsWith(".bmp", Qt::CaseInsensitive)) {
@@ -256,4 +237,65 @@ void MainWindow::on_proectionBox_currentIndexChanged(int index) {
   myGLWidget->proection_type = index;
   myGLWidget->update_proection_GL(0);
   myGLWidget->repaint();
+}
+
+QColor MainWindow::setColor(QPushButton *button) {
+  QColor color = QColorDialog::getColor(Qt::white, this, "Choose color");
+
+  if (color.isValid()) {
+    QPalette palette = button->palette();
+    palette.setColor(QPalette::Button, color);
+    button->setPalette(palette);
+    button->setAutoFillBackground(true);
+    button->setFlat(true);
+  }
+  return color;
+}
+
+void MainWindow::on_lineColorButton_clicked() {
+  QColor color = setColor(ui->lineColorButton);
+  if (color.isValid()) {
+    myGLWidget->lineColor = color;
+    myGLWidget->setModel(m_model);
+  }
+}
+
+void MainWindow::on_dothColorButton_clicked() {
+  QColor color = setColor(ui->dothColorButton);
+  if (color.isValid()) {
+    myGLWidget->dothColor = color;
+    myGLWidget->setModel(m_model);
+  }
+}
+
+void MainWindow::on_backColorButton_clicked() {
+  QColor color = setColor(ui->backColorButton);
+  if (color.isValid()) {
+    myGLWidget->backColor = color;
+    myGLWidget->setModel(m_model);
+    myGLWidget->paintGL();
+  }
+}
+
+void MainWindow::on_thicknessBox_valueChanged(double arg1) {
+  myGLWidget->lineSize = arg1;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
+
+void MainWindow::on_sizeBox_valueChanged(double arg1) {
+  myGLWidget->dothSize = arg1;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
+
+void MainWindow::on_typeLine_currentIndexChanged(int index) {
+  myGLWidget->lineType = index;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
+void MainWindow::on_typeDoth_currentIndexChanged(int index) {
+  myGLWidget->dothType = index;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
 }

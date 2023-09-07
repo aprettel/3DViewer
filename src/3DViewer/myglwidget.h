@@ -1,7 +1,7 @@
 #ifndef MYGLWIDGET_H
 #define MYGLWIDGET_H
 
-//#include <GL/glu.h>
+// #include <GL/glu.h>
 #include <QOpenGLFunctions>
 #include <QOpenGLWidget>
 
@@ -12,12 +12,15 @@
 class MyGLWidget : public QOpenGLWidget {
   Q_OBJECT
 public:
-  int proection_type = PERSP;
+  int proection_type;
   explicit MyGLWidget(QWidget *parent = nullptr);
   void setModel(struct Model *model);
   void drawModel(struct Model *model);
   //  void forse_resizeGL();
   void update_proection_GL(GLdouble aspect);
+  QColor lineColor, dothColor, backColor;
+  int lineType, dothType;
+  double lineSize, dothSize;
 
 protected:
   void initializeGL() override;
