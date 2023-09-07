@@ -7,13 +7,15 @@ MyGLWidget::MyGLWidget(QWidget *parent)
   lineColor = QColor(Qt::red);
   dothColor = QColor(Qt::blue);
   backColor = QColor(Qt::white);
+  dothSize = 3.0f;
+  lineSize = 2.0f;
 }
 
 void MyGLWidget::initializeGL() {
   QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
   f->initializeOpenGLFunctions();
-  // glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(), 0);
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(),
+               dothColor.alphaF());
 
   proection_type = PERSP;
 }
@@ -44,7 +46,8 @@ void MyGLWidget::update_proection_GL(GLdouble aspect) {
 }
 
 void MyGLWidget::paintGL() {
-  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(), 0);
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(),
+               dothColor.alphaF());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (m_model) {
     glEnable(GL_DEPTH_TEST);
@@ -62,7 +65,8 @@ void MyGLWidget::drawModel(struct Model *model) {
   // Рисование по точкам
   glColor4f(dothColor.redF(), dothColor.greenF(), dothColor.blueF(),
             dothColor.alphaF());
-  glPointSize(3.0f);
+  // glPointSize(3.0f);
+  glPointSize(dothSize);
   glBegin(GL_POINTS);
   for (int i = 0; i < model->numVertices; i++) {
     glVertex3f(model->vertices[i].x, model->vertices[i].y,
@@ -74,7 +78,7 @@ void MyGLWidget::drawModel(struct Model *model) {
   glColor4f(lineColor.redF(), lineColor.greenF(), lineColor.blueF(),
             lineColor.alphaF());
 
-  glLineWidth(2.0f);
+  glLineWidth(lineSize);
   glBegin(GL_LINES);
 
   for (int i = 0; i < model->numSurfaces; i++) {

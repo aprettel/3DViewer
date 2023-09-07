@@ -42,10 +42,12 @@ class MainWindow : public QMainWindow {
   QColor setColor(QPushButton *button);
   void on_lineColorButton_clicked();
   void on_dothColorButton_clicked();
-
   void on_backColorButton_clicked();
 
-private:
+  void on_thicknessBox_valueChanged(double arg1);
+  void on_sizeBox_valueChanged(double arg1);
+
+ private:
   Ui::MainWindow *ui;
   QTimer *timer;
   MyGLWidget *myGLWidget;

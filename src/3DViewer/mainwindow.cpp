@@ -273,3 +273,15 @@ void MainWindow::on_backColorButton_clicked() {
     myGLWidget->paintGL();
   }
 }
+
+void MainWindow::on_thicknessBox_valueChanged(double arg1) {
+  myGLWidget->lineSize = arg1;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
+
+void MainWindow::on_sizeBox_valueChanged(double arg1) {
+  myGLWidget->dothSize = arg1;
+  myGLWidget->setModel(m_model);
+  myGLWidget->paintGL();
+}
