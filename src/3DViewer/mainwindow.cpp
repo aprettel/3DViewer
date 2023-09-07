@@ -1,6 +1,6 @@
 #include "mainwindow.h"
-#include "gif.h"
 #include "../viewer.c"
+#include "gif.h"
 #include "ui_mainwindow.h"
 
 extern "C" {
@@ -27,8 +27,8 @@ void MainWindow::on_openButton_clicked() {
       return;
     }
 
-    normalizeModel(m_model, -0.1, 0.1);
-
+    normalizeModel(m_model, -1, 1);
+    translateModel(m_model, 0.0, 0.0, -5);
     myGLWidget->setModel(m_model);
 
     QString info = "Файл: " + QFileInfo(fileName).fileName() + "\n";
@@ -41,6 +41,7 @@ void MainWindow::on_openButton_clicked() {
     QMessageBox::warning(this, "Ошибка", "Файл пуст!\n");
     return;
   }
+  myGLWidget->repaint();
 }
 
 void MainWindow::on_rotateSlider_valueChanged() {
@@ -180,7 +181,7 @@ void MainWindow::on_colorButton_clicked() {
 void MainWindow::on_saveButton_gif_clicked() {
   ui->saveButton_gif->setText("REC...");
   ui->saveButton_gif->setDisabled(1);
-  QDir* pathtmp = new QDir();
+  QDir *pathtmp = new QDir();
   pathtmp->mkdir("tmp");
   timer = new QTimer();
   connect(timer, SIGNAL(timeout()), this, SLOT(recordGif()));
@@ -233,7 +234,7 @@ void MainWindow::makeGif() {
 
   if (!qpath.isNull()) {
     std::string tmp = qpath.toStdString();
-    const char* path = tmp.c_str();
+    const char *path = tmp.c_str();
     GifWriter g = {};
     GifBegin(&g, path, 640, 480, 10);
 
@@ -251,9 +252,8 @@ void MainWindow::makeGif() {
   ui->saveButton_gif->setText("Сохранить GIF");
 }
 
-
-void MainWindow::on_proectionBox_currentIndexChanged(int index)
-{
-    myGLWidget->proection_type=index;
+void MainWindow::on_proectionBox_currentIndexChanged(int index) {
+  myGLWidget->proection_type = index;
+  myGLWidget->update_proection_GL(0);
+  myGLWidget->repaint();
 }
-

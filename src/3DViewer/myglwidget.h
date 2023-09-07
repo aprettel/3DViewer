@@ -12,20 +12,28 @@
 class MyGLWidget : public QOpenGLWidget {
   Q_OBJECT
 public:
-    int proection_type;
+  int proection_type = PERSP;
   explicit MyGLWidget(QWidget *parent = nullptr);
   void setModel(struct Model *model);
   void drawModel(struct Model *model);
+  //  void forse_resizeGL();
   void update_proection_GL(GLdouble aspect);
-  void resizeGL(int width, int height) override;
 
 protected:
   void initializeGL() override;
   void paintGL() override;
-
+  void resizeGL(int width, int height) override;
 
 private:
+  const GLdouble fovY = 45;
+  const GLdouble zNear = 0.01;
+  const GLdouble zFar = 20;
+  GLdouble aspectMem;
+  GLdouble fW, fH;
+  int widthMem;
+  int heightMem;
 
+  const GLdouble pi = 3.1415926535897932384626433832795;
   struct Model *m_model;
 };
 

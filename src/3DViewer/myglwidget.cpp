@@ -9,35 +9,40 @@ void MyGLWidget::initializeGL() {
   QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
   f->initializeOpenGLFunctions();
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-  proection_type = PERSP;
+  // proection_type = ;
 }
 
 void MyGLWidget::resizeGL(int width, int height) {
   update_proection_GL((double)width / (double)height);
+  //  widthMem = width;
+  //  heightMem = height;
 }
 
-void MyGLWidget::update_proection_GL(GLdouble aspect) {
-  GLdouble fovY = 45;
-  GLdouble zNear = 0.01;
-  GLdouble zFar = 100;
+// void MyGLWidget::forse_resizeGL() {
+//   resizeGL(widthMem,heightMem);
+// }
 
-  const GLdouble pi = 3.1415926535897932384626433832795;
-  static GLdouble fW, fH;
+void MyGLWidget::update_proection_GL(GLdouble aspect) {
 
   // fH = tan((fovY / 2) / 180 * pi) * zNear;
   if (aspect != 0) {
-    fH = tan(fovY / 360 * pi) * zNear * 10;
-    fW = fH * aspect;
+    aspectMem = aspect;
   }
+  fH = proection_type == PERSP ? tan(fovY / 360 * pi) * zNear : 1.5;
+  fW = fH * aspectMem;
 
-  glLoadIdentity();
+  repaint();
 
-  if (proection_type == ORTO)
-    glOrtho(-fW, fW, -fH, fH, zNear, zFar);
-  if (proection_type == PERSP)
-    glFrustum(-fW, fW, -fH, fH, zNear, zFar);
-  paintGL();
+  /*  glMatrixMode(GL_PROJECTION);
+      glLoadIdentity();
 
+      if (proection_type == ORTO)
+        glOrtho(-fW, fW, -fH, fH, zNear, zFar);
+      if (proection_type == PERSP)
+        glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+
+      glMatrixMode(GL_MODELVIEW); // устанавливаем матрицу
+      glLoadIdentity();*/ // загружаем матрицу
 }
 
 void MyGLWidget::paintGL() {
@@ -48,6 +53,17 @@ void MyGLWidget::paintGL() {
 
     drawModel(m_model);
     glDisable(GL_DEPTH_TEST);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    if (proection_type == ORTO)
+      glOrtho(-fW, fW, -fH, fH, zNear, zFar);
+    if (proection_type == PERSP)
+      glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+
+    glMatrixMode(GL_MODELVIEW); // устанавливаем матрицу
+    glLoadIdentity();           // загружаем матрицу
   }
 }
 void MyGLWidget::setModel(struct Model *model) {
