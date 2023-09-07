@@ -131,7 +131,7 @@
        </widget>
       </item>
       <item row="7" column="3">
-       <widget class="QPushButton" name="colorButton_2">
+       <widget class="QPushButton" name="dothColorButton">
         <property name="text">
          <string>Цвет точек</string>
         </property>
@@ -145,7 +145,7 @@
        </widget>
       </item>
       <item row="8" column="3" colspan="2">
-       <widget class="QPushButton" name="colorButton_3">
+       <widget class="QPushButton" name="backColorButton">
         <property name="text">
          <string>Цвет фона</string>
         </property>
@@ -238,7 +238,7 @@
        </widget>
       </item>
       <item row="3" column="3" colspan="2">
-       <widget class="QComboBox" name="proectionBox_2">
+       <widget class="QComboBox" name="typeLine">
         <property name="font">
          <font>
           <bold>false</bold>
@@ -303,7 +303,7 @@
        </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QPushButton" name="colorButton">
+       <widget class="QPushButton" name="lineColorButton">
         <property name="text">
          <string>Цвет линии</string>
         </property>
@@ -353,7 +353,7 @@
        </spacer>
       </item>
       <item row="0" column="0" rowspan="16">
-       <widget class="QWidget" name="verticalWidget" native="true">
+       <widget class="QWidget" name="screen" native="true">
         <property name="minimumSize">
          <size>
           <width>460</width>

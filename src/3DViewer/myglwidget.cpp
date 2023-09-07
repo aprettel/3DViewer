@@ -3,12 +3,18 @@
 #include "mainwindow.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
-    : QOpenGLWidget(parent), m_model(nullptr) {}
+    : QOpenGLWidget(parent), m_model(nullptr) {
+  lineColor = QColor(Qt::red);
+  dothColor = QColor(Qt::blue);
+  backColor = QColor(Qt::white);
+}
 
 void MyGLWidget::initializeGL() {
   QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
   f->initializeOpenGLFunctions();
-  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  // glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(), 0);
+
   proection_type = PERSP;
 }
 
@@ -32,19 +38,16 @@ void MyGLWidget::update_proection_GL(GLdouble aspect) {
 
   glLoadIdentity();
 
-  if (proection_type == ORTO)
-    glOrtho(-fW, fW, -fH, fH, zNear, zFar);
-  if (proection_type == PERSP)
-    glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+  if (proection_type == ORTO) glOrtho(-fW, fW, -fH, fH, zNear, zFar);
+  if (proection_type == PERSP) glFrustum(-fW, fW, -fH, fH, zNear, zFar);
   paintGL();
-
 }
 
 void MyGLWidget::paintGL() {
+  glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(), 0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (m_model) {
     glEnable(GL_DEPTH_TEST);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     drawModel(m_model);
     glDisable(GL_DEPTH_TEST);
@@ -57,7 +60,8 @@ void MyGLWidget::setModel(struct Model *model) {
 
 void MyGLWidget::drawModel(struct Model *model) {
   // Рисование по точкам
-  glColor3f(0.0f, 0.0f, 1.0f);
+  glColor4f(dothColor.redF(), dothColor.greenF(), dothColor.blueF(),
+            dothColor.alphaF());
   glPointSize(3.0f);
   glBegin(GL_POINTS);
   for (int i = 0; i < model->numVertices; i++) {
@@ -67,7 +71,9 @@ void MyGLWidget::drawModel(struct Model *model) {
   glEnd();
 
   // Рисование по линиям
-  glColor3f(1.0f, 0.0f, 0.0f);
+  glColor4f(lineColor.redF(), lineColor.greenF(), lineColor.blueF(),
+            lineColor.alphaF());
+
   glLineWidth(2.0f);
   glBegin(GL_LINES);
 
