@@ -12,14 +12,14 @@
 class MyGLWidget : public QOpenGLWidget {
   Q_OBJECT
 public:
-  int proection_type;
+  int proection_type = ORTO;
   explicit MyGLWidget(QWidget *parent = nullptr);
   void setModel(struct Model *model);
   void drawModel(struct Model *model);
   //  void forse_resizeGL();
   void update_proection_GL(GLdouble aspect);
   QColor lineColor, dothColor, backColor;
-  int lineType, dothType;
+  int lineType = 0, dothType = 1;
   double lineSize, dothSize;
 
 protected:

@@ -6,7 +6,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     : QOpenGLWidget(parent), m_model(nullptr) {
   lineColor = QColor(Qt::red);
   dothColor = QColor(Qt::blue);
-  backColor = QColor(Qt::white);
+  backColor = QColor(50,50,50);
   dothSize = 3.0f;
   lineSize = 2.0f;
   dothType = 0;

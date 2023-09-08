@@ -148,7 +148,7 @@ void MainWindow::on_clearZoom_clicked() {
     myGLWidget->setModel(m_model);
 
     normalizeModel(m_model, -1.0, 1.0);
-
+translateModel(m_model, 0.0, 0.0, -5);
     myGLWidget->repaint();
   }
 }
@@ -273,29 +273,29 @@ void MainWindow::on_backColorButton_clicked() {
   if (color.isValid()) {
     myGLWidget->backColor = color;
     myGLWidget->setModel(m_model);
-    myGLWidget->paintGL();
+    myGLWidget->repaint();
   }
 }
 
 void MainWindow::on_thicknessBox_valueChanged(double arg1) {
   myGLWidget->lineSize = arg1;
   myGLWidget->setModel(m_model);
-  myGLWidget->paintGL();
+  myGLWidget->repaint();
 }
 
 void MainWindow::on_sizeBox_valueChanged(double arg1) {
   myGLWidget->dothSize = arg1;
   myGLWidget->setModel(m_model);
-  myGLWidget->paintGL();
+  myGLWidget->repaint();
 }
 
 void MainWindow::on_typeLine_currentIndexChanged(int index) {
   myGLWidget->lineType = index;
   myGLWidget->setModel(m_model);
-  myGLWidget->paintGL();
+  myGLWidget->repaint();
 }
 void MainWindow::on_typeDoth_currentIndexChanged(int index) {
   myGLWidget->dothType = index;
   myGLWidget->setModel(m_model);
-  myGLWidget->paintGL();
+  myGLWidget->repaint();
 }
