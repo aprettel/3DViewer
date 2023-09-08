@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2023-09-07T20:31:12. -->
+<!-- Written by QtCreator 7.0.0, 2023-09-08T20:18:40. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -97,8 +97,8 @@
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <value type="int" key="EnableQmlDebugging">0</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Users/aethando/Desktop/C8_3DViewer_v1.0/src/build-3DViewer-Desktop_x86_darwin_generic_mach_o_64bit-Debug</value>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">/Users/aethando/Desktop/C8_3DViewer_v1.0/src/build-3DViewer-Desktop_x86_darwin_generic_mach_o_64bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Users/aethando/Desktop</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory.shadowDir">/Users/aethando/Desktop</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -241,9 +241,8 @@
      <value type="QString">DYLD_FRAMEWORK_PATH</value>
      <value type="QString">DYLD_LIBRARY_PATH</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">3DViewer2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/aethando/Downloads/C8_3DViewer_v1.0/src/3DViewer/3DViewer.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/aethando/Downloads/C8_3DViewer_v1.0/src/3DViewer/3DViewer.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/aethando/Desktop/C8_3DViewer_v1.0-1/src/3DViewer/3DViewer.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/aethando/Desktop/C8_3DViewer_v1.0-1/src/3DViewer/3DViewer.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

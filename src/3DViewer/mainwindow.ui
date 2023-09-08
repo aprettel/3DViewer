@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1141</width>
+    <width>1188</width>
     <height>728</height>
    </rect>
   </property>
@@ -92,19 +92,6 @@
           <string>z</string>
          </property>
         </item>
-       </widget>
-      </item>
-      <item row="5" column="4">
-       <widget class="QDoubleSpinBox" name="thicknessBox">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="minimum">
-         <double>3.000000000000000</double>
-        </property>
        </widget>
       </item>
       <item row="10" column="1" colspan="3">
@@ -348,13 +335,6 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="4">
-       <widget class="QDoubleSpinBox" name="sizeBox">
-        <property name="minimum">
-         <double>2.000000000000000</double>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="saveButton_gif">
         <property name="text">
@@ -435,6 +415,20 @@
         </property>
        </widget>
       </item>
+      <item row="5" column="4">
+       <widget class="QSpinBox" name="thicknessBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QSpinBox" name="sizeBox">
+        <property name="minimum">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -444,7 +438,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1141</width>
+     <width>1188</width>
      <height>24</height>
     </rect>
    </property>

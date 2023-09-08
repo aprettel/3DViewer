@@ -1,6 +1,5 @@
 #include "viewer.h"
 
-// Загрузка модели из файла
 struct Model* loadModelFromFile(const char* filename) {
   FILE* file = fopen(filename, "r");
   if (file) {
@@ -77,7 +76,6 @@ struct Model* loadModelFromFile(const char* filename) {
   }
 }
 
-// Записываем вершины
 void addVertex(struct Model* model, struct Vertex vertex) {
   model->vertices = (struct Vertex*)realloc(
       model->vertices, (model->numVertices + 1) * sizeof(struct Vertex));
@@ -85,7 +83,6 @@ void addVertex(struct Model* model, struct Vertex vertex) {
   model->numVertices++;
 }
 
-// Записываем индексы точек
 void addSurface(struct Model* model, struct Surface surface) {
   model->surfaces = (struct Surface*)realloc(
       model->surfaces, (model->numSurfaces + 1) * sizeof(struct Surface));
@@ -93,7 +90,6 @@ void addSurface(struct Model* model, struct Surface surface) {
   model->numSurfaces++;
 }
 
-// Перемещение модели
 void translateModel(struct Model* model, double x, double y, double z) {
   for (int i = 0; i < model->numVertices; i++) {
     model->vertices[i].x += x;
@@ -102,7 +98,6 @@ void translateModel(struct Model* model, double x, double y, double z) {
   }
 }
 
-// Масштаб модели
 void scaleModel(struct Model* model, double scaleFactor) {
   if (scaleFactor >= -1 && scaleFactor <= 1) {
     double centerX = 0.0;
@@ -137,7 +132,6 @@ void scaleModel(struct Model* model, double scaleFactor) {
   }
 }
 
-// Поворот по X
 void rotateModel_X(struct Model* model, double x_turn) {
   double centerX = 0;
   double centerY = 0;
@@ -173,7 +167,6 @@ void rotateModel_X(struct Model* model, double x_turn) {
   }
 }
 
-// Поворот по Y
 void rotateModel_Y(struct Model* model, double y_turn) {
   double centerX = 0;
   double centerY = 0;
@@ -209,7 +202,6 @@ void rotateModel_Y(struct Model* model, double y_turn) {
   }
 }
 
-// Поворот по Z
 void rotateModel_Z(struct Model* model, double z_turn) {
   double centerX = 0;
   double centerY = 0;

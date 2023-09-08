@@ -54,15 +54,15 @@ void MainWindow::on_rotateSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-    case 'x':
-      ui->rotateSlider->setValue(oldX / M_PI * 180.0);
-      break;
-    case 'y':
-      ui->rotateSlider->setValue(oldY / M_PI * 180.0);
-      break;
-    case 'z':
-      ui->rotateSlider->setValue(oldZ / M_PI * 180.0);
-      break;
+      case 'x':
+        ui->rotateSlider->setValue(oldX / M_PI * 180.0);
+        break;
+      case 'y':
+        ui->rotateSlider->setValue(oldY / M_PI * 180.0);
+        break;
+      case 'z':
+        ui->rotateSlider->setValue(oldZ / M_PI * 180.0);
+        break;
     }
   } else {
     if (fileName.isEmpty()) {
@@ -107,15 +107,15 @@ void MainWindow::on_translationSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-    case 'x':
-      ui->translationSlider->setValue(oldX * 100);
-      break;
-    case 'y':
-      ui->translationSlider->setValue(oldY * 100);
-      break;
-    case 'z':
-      ui->translationSlider->setValue(oldZ * 100);
-      break;
+      case 'x':
+        ui->translationSlider->setValue(oldX * 100);
+        break;
+      case 'y':
+        ui->translationSlider->setValue(oldY * 100);
+        break;
+      case 'z':
+        ui->translationSlider->setValue(oldZ * 100);
+        break;
     }
   } else {
     if (fileName.isEmpty()) {
@@ -148,7 +148,7 @@ void MainWindow::on_clearZoom_clicked() {
     myGLWidget->setModel(m_model);
 
     normalizeModel(m_model, -1.0, 1.0);
-translateModel(m_model, 0.0, 0.0, -5);
+    translateModel(m_model, 0.0, 0.0, -5);
     myGLWidget->repaint();
   }
 }
@@ -191,17 +191,13 @@ void MainWindow::on_saveButton_img_clicked() {
 
   if (!imagePath.isEmpty()) {
     QImage image = ui->screen->grab().toImage();
-
-    // Сохранение изображения в формате BMP
     if (imagePath.endsWith(".bmp", Qt::CaseInsensitive)) {
       if (!image.save(imagePath, "BMP")) {
         QMessageBox::critical(this, "Ошибка",
                               "Ошибка сохранения изображения!\n");
       }
-    }
-    // Сохранение изображения в формате JPEG
-    else if (imagePath.endsWith(".jpg", Qt::CaseInsensitive) ||
-             imagePath.endsWith(".jpeg", Qt::CaseInsensitive)) {
+    } else if (imagePath.endsWith(".jpg", Qt::CaseInsensitive) ||
+               imagePath.endsWith(".jpeg", Qt::CaseInsensitive)) {
       if (!image.save(imagePath, "JPEG")) {
         QMessageBox::critical(this, "Ошибка",
                               "Ошибка сохранения изображения!\n");
@@ -212,7 +208,6 @@ void MainWindow::on_saveButton_img_clicked() {
 
 void MainWindow::makeGif() {
   QString qpath = QFileDialog::getSaveFileName(this, NULL, NULL, "GIF (*.gif)");
-
   if (!qpath.isNull()) {
     std::string tmp = qpath.toStdString();
     const char *path = tmp.c_str();
@@ -241,7 +236,6 @@ void MainWindow::on_proectionBox_currentIndexChanged(int index) {
 
 QColor MainWindow::setColor(QPushButton *button) {
   QColor color = QColorDialog::getColor(Qt::white, this, "Choose color");
-
   if (color.isValid()) {
     QPalette palette = button->palette();
     palette.setColor(QPalette::Button, color);
@@ -277,13 +271,13 @@ void MainWindow::on_backColorButton_clicked() {
   }
 }
 
-void MainWindow::on_thicknessBox_valueChanged(double arg1) {
+void MainWindow::on_thicknessBox_valueChanged(int arg1) {
   myGLWidget->lineSize = arg1;
   myGLWidget->setModel(m_model);
   myGLWidget->repaint();
 }
 
-void MainWindow::on_sizeBox_valueChanged(double arg1) {
+void MainWindow::on_sizeBox_valueChanged(int arg1) {
   myGLWidget->dothSize = arg1;
   myGLWidget->setModel(m_model);
   myGLWidget->repaint();
