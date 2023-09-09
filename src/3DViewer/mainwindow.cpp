@@ -59,15 +59,15 @@ void MainWindow::on_rotateSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-    case 'x':
-      ui->rotateSlider->setValue(oldX);
-      break;
-    case 'y':
-      ui->rotateSlider->setValue(oldY);
-      break;
-    case 'z':
-      ui->rotateSlider->setValue(oldZ);
-      break;
+      case 'x':
+        ui->rotateSlider->setValue(oldX);
+        break;
+      case 'y':
+        ui->rotateSlider->setValue(oldY);
+        break;
+      case 'z':
+        ui->rotateSlider->setValue(oldZ);
+        break;
     }
   } else {
     if (fileName.isEmpty()) {
@@ -111,15 +111,15 @@ void MainWindow::on_translationSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-    case 'x':
-      ui->translationSlider->setValue(oldX * 100);
-      break;
-    case 'y':
-      ui->translationSlider->setValue(oldY * 100);
-      break;
-    case 'z':
-      ui->translationSlider->setValue(oldZ * 100);
-      break;
+      case 'x':
+        ui->translationSlider->setValue(oldX * 100);
+        break;
+      case 'y':
+        ui->translationSlider->setValue(oldY * 100);
+        break;
+      case 'z':
+        ui->translationSlider->setValue(oldZ * 100);
+        break;
     }
   } else {
     if (fileName.isEmpty()) {

@@ -5,84 +5,75 @@ void rotateModel_X(struct Model *model, double x_turn);
 void rotateModel_Y(struct Model *model, double y_turn);
 void rotateModel_Z(struct Model *model, double z_turn);
 
-// Загрузка модели из файла
 struct Model *loadModelFromFile(const char *filename) {
   FILE *file = fopen(filename, "r");
-  if (file) {
-    char line_file[256];
-    struct Model *model = (struct Model *)malloc(sizeof(struct Model));
-    model->vertices = NULL;
-    model->numVertices = 0;
-    model->surfaces = NULL;
-    model->numSurfaces = 0;
-    while (fgets(line_file, sizeof(line_file), file)) {
-      if (line_file[0] == 'v') {
-        if (line_file[1] == ' ') {
-          double x, y, z;
-          sscanf(line_file, "v %lf %lf %lf", &x, &y, &z);
-          struct Vertex vertex = {x, y, z};
-          addVertex(model, vertex);
-        } else if (line_file[1] == 't' || line_file[1] == 'n') {
-          continue;
-        }
-      } else if (line_file[0] == 'f') {
-        int vertices[4], texCoords[4], normals[4];
-        if (sscanf(line_file, "f %d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d",
-                   &vertices[0], &texCoords[0], &normals[0], &vertices[1],
-                   &texCoords[1], &normals[1], &vertices[2], &texCoords[2],
-                   &normals[2], &vertices[3], &texCoords[3],
-                   &normals[3]) == 12 ||
-            sscanf(line_file, "f %d//%d//%d %d//%d//%d %d//%d//%d %d//%d//%d",
-                   &vertices[0], &texCoords[0], &normals[0], &vertices[1],
-                   &texCoords[1], &normals[1], &vertices[2], &texCoords[2],
-                   &normals[2], &vertices[3], &texCoords[3],
-                   &normals[3]) == 12 ||
-            sscanf(line_file, "f %d/%d %d/%d %d/%d %d/%d", &vertices[0],
-                   &texCoords[0], &vertices[1], &texCoords[1], &vertices[2],
-                   &texCoords[2], &vertices[3], &texCoords[3]) == 8 ||
-            sscanf(line_file, "f %d %d %d %d", &vertices[0], &vertices[1],
-                   &vertices[2], &vertices[3]) == 4) {
-          addSurface(model,
-                     (struct Surface){vertices[0], vertices[1], vertices[2]});
-          addSurface(model,
-                     (struct Surface){vertices[0], vertices[2], vertices[3]});
-        } else if (sscanf(line_file, "f %d/%d/%d %d/%d/%d %d/%d/%d",
-                          &vertices[0], &texCoords[0], &normals[0],
-                          &vertices[1], &texCoords[1], &normals[1],
-                          &vertices[2], &texCoords[2], &normals[2]) == 9 ||
-                   sscanf(line_file, "f %d/%d %d/%d %d/%d", &vertices[0],
-                          &texCoords[0], &vertices[1], &texCoords[1],
-                          &vertices[2], &texCoords[2]) == 6 ||
-                   sscanf(line_file, "f %d//%d %d//%d %d//%d", &vertices[0],
-                          &texCoords[0], &vertices[1], &texCoords[1],
-                          &vertices[2], &texCoords[2]) == 6 ||
-                   sscanf(line_file, "f %d %d %d ", &vertices[0], &vertices[1],
-                          &vertices[2]) == 3) {
-          addSurface(model,
-                     (struct Surface){vertices[0], vertices[1], vertices[2]});
-        } else if (sscanf(line_file, "f %d//%d %d//%d %d//%d %d//%d",
-                          &vertices[0], &texCoords[0], &vertices[1],
-                          &texCoords[1], &vertices[2], &texCoords[2],
-                          &vertices[3], &texCoords[3]) == 8) {
-          addSurface(model,
-                     (struct Surface){vertices[0], vertices[1], vertices[2]});
-        } else if (sscanf(line_file, "f %d %d ", &vertices[0], &vertices[1]) ==
-                   2) {
-          vertices[2] = vertices[0];
-          addSurface(model,
-                     (struct Surface){vertices[0], vertices[1], vertices[2]});
-        }
+  char line_file[256];
+  struct Model *model = (struct Model *)malloc(sizeof(struct Model));
+  model->vertices = NULL;
+  model->numVertices = 0;
+  model->surfaces = NULL;
+  model->numSurfaces = 0;
+  while (fgets(line_file, sizeof(line_file), file)) {
+    if (line_file[0] == 'v') {
+      if (line_file[1] == ' ') {
+        double x, y, z;
+        sscanf(line_file, "v %lf %lf %lf", &x, &y, &z);
+        struct Vertex vertex = {x, y, z};
+        addVertex(model, vertex);
+      } else if (line_file[1] == 't' || line_file[1] == 'n') {
+        continue;
+      }
+    } else if (line_file[0] == 'f') {
+      int vertices[4], texCoords[4], normals[4];
+      if (sscanf(line_file, "f %d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d",
+                 &vertices[0], &texCoords[0], &normals[0], &vertices[1],
+                 &texCoords[1], &normals[1], &vertices[2], &texCoords[2],
+                 &normals[2], &vertices[3], &texCoords[3], &normals[3]) == 12 ||
+          sscanf(line_file, "f %d//%d//%d %d//%d//%d %d//%d//%d %d//%d//%d",
+                 &vertices[0], &texCoords[0], &normals[0], &vertices[1],
+                 &texCoords[1], &normals[1], &vertices[2], &texCoords[2],
+                 &normals[2], &vertices[3], &texCoords[3], &normals[3]) == 12 ||
+          sscanf(line_file, "f %d/%d %d/%d %d/%d %d/%d", &vertices[0],
+                 &texCoords[0], &vertices[1], &texCoords[1], &vertices[2],
+                 &texCoords[2], &vertices[3], &texCoords[3]) == 8 ||
+          sscanf(line_file, "f %d %d %d %d", &vertices[0], &vertices[1],
+                 &vertices[2], &vertices[3]) == 4) {
+        addSurface(model,
+                   (struct Surface){vertices[0], vertices[1], vertices[2]});
+        addSurface(model,
+                   (struct Surface){vertices[0], vertices[2], vertices[3]});
+      } else if (sscanf(line_file, "f %d/%d/%d %d/%d/%d %d/%d/%d", &vertices[0],
+                        &texCoords[0], &normals[0], &vertices[1], &texCoords[1],
+                        &normals[1], &vertices[2], &texCoords[2],
+                        &normals[2]) == 9 ||
+                 sscanf(line_file, "f %d/%d %d/%d %d/%d", &vertices[0],
+                        &texCoords[0], &vertices[1], &texCoords[1],
+                        &vertices[2], &texCoords[2]) == 6 ||
+                 sscanf(line_file, "f %d//%d %d//%d %d//%d", &vertices[0],
+                        &texCoords[0], &vertices[1], &texCoords[1],
+                        &vertices[2], &texCoords[2]) == 6 ||
+                 sscanf(line_file, "f %d %d %d ", &vertices[0], &vertices[1],
+                        &vertices[2]) == 3) {
+        addSurface(model,
+                   (struct Surface){vertices[0], vertices[1], vertices[2]});
+      } else if (sscanf(line_file, "f %d//%d %d//%d %d//%d %d//%d",
+                        &vertices[0], &texCoords[0], &vertices[1],
+                        &texCoords[1], &vertices[2], &texCoords[2],
+                        &vertices[3], &texCoords[3]) == 8) {
+        addSurface(model,
+                   (struct Surface){vertices[0], vertices[1], vertices[2]});
+      } else if (sscanf(line_file, "f %d %d ", &vertices[0], &vertices[1]) ==
+                 2) {
+        vertices[2] = vertices[0];
+        addSurface(model,
+                   (struct Surface){vertices[0], vertices[1], vertices[2]});
       }
     }
-    fclose(file);
-    return model;
-  } else {
-    printf("Ошибка, файл пуст!");
-    exit(1);
   }
+  fclose(file);
+  return model;
 }
 
-// Записываем вершины
 void addVertex(struct Model *model, struct Vertex vertex) {
   model->vertices = (struct Vertex *)realloc(
       model->vertices, (model->numVertices + 1) * sizeof(struct Vertex));
@@ -90,7 +81,6 @@ void addVertex(struct Model *model, struct Vertex vertex) {
   model->numVertices++;
 }
 
-// Записываем индексы точек
 void addSurface(struct Model *model, struct Surface surface) {
   model->surfaces = (struct Surface *)realloc(
       model->surfaces, (model->numSurfaces + 1) * sizeof(struct Surface));
@@ -98,7 +88,6 @@ void addSurface(struct Model *model, struct Surface surface) {
   model->numSurfaces++;
 }
 
-// Перемещение модели
 void translateModel(struct Model *model, double x, double y, double z) {
   for (int i = 0; i < model->numVertices; i++) {
     model->vertices[i].x += x;
@@ -107,9 +96,7 @@ void translateModel(struct Model *model, double x, double y, double z) {
   }
 }
 
-// Масштаб модели
 void scaleModel(struct Model *model, double scaleFactor) {
-  // if (scaleFactor >= -1 && scaleFactor <= 1) {
   struct Vertex center = {0, 0, 0};
   findCenter(&center, model);
 
@@ -148,7 +135,6 @@ void rotateModel(struct Model *model, double x_turn, double y_turn,
   }
 }
 
-// Поворот по X
 void rotateModel_X(struct Model *model, double x_turn) {
   for (int i = 0; i < model->numVertices; i++) {
     double y = model->vertices[i].y;
@@ -160,7 +146,6 @@ void rotateModel_X(struct Model *model, double x_turn) {
   }
 }
 
-// Поворот по Y
 void rotateModel_Y(struct Model *model, double y_turn) {
   for (int i = 0; i < model->numVertices; i++) {
     double x = model->vertices[i].x;
@@ -172,7 +157,6 @@ void rotateModel_Y(struct Model *model, double y_turn) {
   }
 }
 
-// Поворот по Z
 void rotateModel_Z(struct Model *model, double z_turn) {
   for (int i = 0; i < model->numVertices; i++) {
     double x = model->vertices[i].x;
@@ -193,18 +177,12 @@ void normalizeModel(struct Model *model, double minRange, double maxRange) {
     double y = model->vertices[i].y;
     double z = model->vertices[i].z;
 
-    if (x < minX)
-      minX = x;
-    if (x > maxX)
-      maxX = x;
-    if (y < minY)
-      minY = y;
-    if (y > maxY)
-      maxY = y;
-    if (z < minZ)
-      minZ = z;
-    if (z > maxZ)
-      maxZ = z;
+    if (x < minX) minX = x;
+    if (x > maxX) maxX = x;
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+    if (z < minZ) minZ = z;
+    if (z > maxZ) maxZ = z;
   }
 
   double maxDistance = fmax(fmax(maxX - minX, maxY - minY), maxZ - minZ);

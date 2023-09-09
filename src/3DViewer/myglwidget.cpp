@@ -45,10 +45,8 @@ void MyGLWidget::paintGL() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (proection_type == ORTO)
-      glOrtho(-fW, fW, -fH, fH, zNear, zFar);
-    if (proection_type == PERSP)
-      glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+    if (proection_type == ORTO) glOrtho(-fW, fW, -fH, fH, zNear, zFar);
+    if (proection_type == PERSP) glFrustum(-fW, fW, -fH, fH, zNear, zFar);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

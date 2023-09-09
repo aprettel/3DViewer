@@ -7,12 +7,11 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMovie>
+#include <QSettings>
 #include <QTimer>
 
 #include "myglwidget.h"
 #include "ui_mainwindow.h"
-
-#include <QSettings>
 
 namespace Ui {
 class MainWindow;
@@ -21,11 +20,11 @@ class MainWindow;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
-public:
+ public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
-private slots:
+ private slots:
   void on_openButton_clicked();
   void on_scaleSlider_valueChanged();
   void on_translationSlider_valueChanged();
@@ -55,7 +54,7 @@ private slots:
   void save_settings();
   void load_settings();
 
-private:
+ private:
   QSettings *settings;
   Ui::MainWindow *ui;
   QTimer *timer;
@@ -64,4 +63,4 @@ private:
   struct Model *m_model;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
