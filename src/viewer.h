@@ -33,4 +33,6 @@ void rotateModel_Y(struct Model* model, double y_turn);
 void rotateModel_Z(struct Model* model, double z_turn);
 void normalizeModel(struct Model* model, double minRange, double maxRange);
 
+void collapseModel(struct Model* model);
+
 #endif  // VIEWER_H

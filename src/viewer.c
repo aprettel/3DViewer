@@ -1,11 +1,11 @@
 #include "viewer.h"
 
 // Загрузка модели из файла
-struct Model* loadModelFromFile(const char* filename) {
-  FILE* file = fopen(filename, "r");
+struct Model *loadModelFromFile(const char *filename) {
+  FILE *file = fopen(filename, "r");
   if (file) {
     char line_file[256];
-    struct Model* model = (struct Model*)malloc(sizeof(struct Model));
+    struct Model *model = (struct Model *)malloc(sizeof(struct Model));
     model->vertices = NULL;
     model->numVertices = 0;
     model->surfaces = NULL;
@@ -78,23 +78,23 @@ struct Model* loadModelFromFile(const char* filename) {
 }
 
 // Записываем вершины
-void addVertex(struct Model* model, struct Vertex vertex) {
-  model->vertices = (struct Vertex*)realloc(
+void addVertex(struct Model *model, struct Vertex vertex) {
+  model->vertices = (struct Vertex *)realloc(
       model->vertices, (model->numVertices + 1) * sizeof(struct Vertex));
   model->vertices[model->numVertices] = vertex;
   model->numVertices++;
 }
 
 // Записываем индексы точек
-void addSurface(struct Model* model, struct Surface surface) {
-  model->surfaces = (struct Surface*)realloc(
+void addSurface(struct Model *model, struct Surface surface) {
+  model->surfaces = (struct Surface *)realloc(
       model->surfaces, (model->numSurfaces + 1) * sizeof(struct Surface));
   model->surfaces[model->numSurfaces] = surface;
   model->numSurfaces++;
 }
 
 // Перемещение модели
-void translateModel(struct Model* model, double x, double y, double z) {
+void translateModel(struct Model *model, double x, double y, double z) {
   for (int i = 0; i < model->numVertices; i++) {
     model->vertices[i].x += x;
     model->vertices[i].y += y;
@@ -103,42 +103,36 @@ void translateModel(struct Model* model, double x, double y, double z) {
 }
 
 // Масштаб модели
-void scaleModel(struct Model* model, double scaleFactor) {
-  if (scaleFactor >= -1 && scaleFactor <= 1) {
-    double centerX = 0.0;
-    double centerY = 0.0;
-    double centerZ = 0.0;
+void scaleModel(struct Model *model, double scaleFactor) {
+  // if (scaleFactor >= -1 && scaleFactor <= 1) {
+  double centerX = 0.0;
+  double centerY = 0.0;
+  double centerZ = 0.0;
 
-    for (int i = 0; i < model->numVertices; i++) {
-      centerX += model->vertices[i].x;
-      centerY += model->vertices[i].y;
-      centerZ += model->vertices[i].z;
-    }
-
-    centerX /= model->numVertices;
-    centerY /= model->numVertices;
-    centerZ /= model->numVertices;
-
-    for (int i = 0; i < model->numVertices; i++) {
-      double deltaX = model->vertices[i].x - centerX;
-      double deltaY = model->vertices[i].y - centerY;
-      double deltaZ = model->vertices[i].z - centerZ;
-
-      if (scaleFactor > 0) {
-        model->vertices[i].x = centerX + (deltaX / (1.0 - scaleFactor));
-        model->vertices[i].y = centerY + (deltaY / (1.0 - scaleFactor));
-        model->vertices[i].z = centerZ + (deltaZ / (1.0 - scaleFactor));
-      } else if (scaleFactor < 0) {
-        model->vertices[i].x = centerX + (deltaX / -(scaleFactor - 1.0));
-        model->vertices[i].y = centerY + (deltaY / -(scaleFactor - 1.0));
-        model->vertices[i].z = centerZ + (deltaZ / -(scaleFactor - 1.0));
-      }
-    }
+  for (int i = 0; i < model->numVertices; i++) {
+    centerX += model->vertices[i].x;
+    centerY += model->vertices[i].y;
+    centerZ += model->vertices[i].z;
   }
+
+  centerX /= model->numVertices;
+  centerY /= model->numVertices;
+  centerZ /= model->numVertices;
+
+  for (int i = 0; i < model->numVertices; i++) {
+    double deltaX = model->vertices[i].x - centerX;
+    double deltaY = model->vertices[i].y - centerY;
+    double deltaZ = model->vertices[i].z - centerZ;
+
+    model->vertices[i].x = centerX + (deltaX * scaleFactor);
+    model->vertices[i].y = centerY + (deltaY * scaleFactor);
+    model->vertices[i].z = centerZ + (deltaZ * scaleFactor);
+  }
+  //}
 }
 
 // Поворот по X
-void rotateModel_X(struct Model* model, double x_turn) {
+void rotateModel_X(struct Model *model, double x_turn) {
   double centerX = 0;
   double centerY = 0;
   double centerZ = 0;
@@ -174,7 +168,7 @@ void rotateModel_X(struct Model* model, double x_turn) {
 }
 
 // Поворот по Y
-void rotateModel_Y(struct Model* model, double y_turn) {
+void rotateModel_Y(struct Model *model, double y_turn) {
   double centerX = 0;
   double centerY = 0;
   double centerZ = 0;
@@ -210,7 +204,7 @@ void rotateModel_Y(struct Model* model, double y_turn) {
 }
 
 // Поворот по Z
-void rotateModel_Z(struct Model* model, double z_turn) {
+void rotateModel_Z(struct Model *model, double z_turn) {
   double centerX = 0;
   double centerY = 0;
   double centerZ = 0;
@@ -245,21 +239,27 @@ void rotateModel_Z(struct Model* model, double z_turn) {
   }
 }
 
-void normalizeModel(struct Model* model, double minRange, double maxRange) {
-  double minX, minY, minZ = DBL_MAX;
-  double maxX, maxY, maxZ = -DBL_MAX;
+void normalizeModel(struct Model *model, double minRange, double maxRange) {
+  double minX = DBL_MAX, minY = DBL_MAX, minZ = DBL_MAX;
+  double maxX = -DBL_MAX, maxY = -DBL_MAX, maxZ = -DBL_MAX;
 
   for (int i = 0; i < model->numVertices; i++) {
     double x = model->vertices[i].x;
     double y = model->vertices[i].y;
     double z = model->vertices[i].z;
 
-    if (x < minX) minX = x;
-    if (x > maxX) maxX = x;
-    if (y < minY) minY = y;
-    if (y > maxY) maxY = y;
-    if (z < minZ) minZ = z;
-    if (z > maxZ) maxZ = z;
+    if (x < minX)
+      minX = x;
+    if (x > maxX)
+      maxX = x;
+    if (y < minY)
+      minY = y;
+    if (y > maxY)
+      maxY = y;
+    if (z < minZ)
+      minZ = z;
+    if (z > maxZ)
+      maxZ = z;
   }
 
   double maxDistance = fmax(fmax(maxX - minX, maxY - minY), maxZ - minZ);
@@ -275,4 +275,10 @@ void normalizeModel(struct Model* model, double minRange, double maxRange) {
     model->vertices[i].y = (model->vertices[i].y - centerY) * scaleFactor;
     model->vertices[i].z = (model->vertices[i].z - centerZ) * scaleFactor;
   }
+}
+
+void collapseModel(struct Model *model) {
+  free(model->surfaces);
+  free(model->vertices);
+  free(model);
 }

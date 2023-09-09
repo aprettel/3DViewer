@@ -86,12 +86,12 @@ void MainWindow::on_rotateSlider_valueChanged() {
 }
 
 void MainWindow::on_scaleSlider_valueChanged() {
-  static double oldScale = 0.0;
+  static double oldScale = 1.0;
   if (fileName.isEmpty()) {
     ui->scaleSlider->isEnabled();
   } else {
-    const double scaleFactor = (double)ui->scaleSlider->value() / 100.0;
-    scaleModel(m_model, scaleFactor - oldScale);
+    const double scaleFactor = pow(2,(double)ui->scaleSlider->value() / 50.0) ;
+    scaleModel(m_model, scaleFactor/oldScale);
     oldScale = scaleFactor;
 
     myGLWidget->repaint();
