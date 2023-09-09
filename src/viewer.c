@@ -177,12 +177,18 @@ void normalizeModel(struct Model *model, double minRange, double maxRange) {
     double y = model->vertices[i].y;
     double z = model->vertices[i].z;
 
-    if (x < minX) minX = x;
-    if (x > maxX) maxX = x;
-    if (y < minY) minY = y;
-    if (y > maxY) maxY = y;
-    if (z < minZ) minZ = z;
-    if (z > maxZ) maxZ = z;
+    if (x < minX)
+      minX = x;
+    if (x > maxX)
+      maxX = x;
+    if (y < minY)
+      minY = y;
+    if (y > maxY)
+      maxY = y;
+    if (z < minZ)
+      minZ = z;
+    if (z > maxZ)
+      maxZ = z;
   }
 
   double maxDistance = fmax(fmax(maxX - minX, maxY - minY), maxZ - minZ);
@@ -204,6 +210,7 @@ void collapseModel(struct Model *model) {
   free(model->surfaces);
   free(model->vertices);
   free(model);
+  model = NULL;
 }
 
 void findCenter(struct Vertex *center, struct Model *model) {

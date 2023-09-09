@@ -21,8 +21,9 @@ all: install
 install: qmake
 	make -f Qmakefile install INSTALL_ROOT=$(INSTALL_ROOT)
 
-uninstall: qmake
+uninstall:clean qmake
 	make -f Qmakefile uninstall INSTALL_ROOT=$(INSTALL_ROOT)
+	-rm -rf 3DViewer.app
 
 rebuild: clean all
 

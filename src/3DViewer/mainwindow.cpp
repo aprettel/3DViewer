@@ -19,14 +19,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
   save_settings();
+  if (m_model != NULL)
+    collapseModel(m_model);
   delete ui;
 }
 
 void MainWindow::on_openButton_clicked() {
-  on_cleanModelButton_clicked();
   fileName = QFileDialog::getOpenFileName(this, tr("Open .obj File"), ".",
                                           tr("OBJ Files (*.obj)"));
   if (!fileName.isEmpty()) {
+    cleanPosRotScale();
+    if (m_model != NULL)
+      collapseModel(m_model);
     m_model = loadModelFromFile(fileName.toStdString().c_str());
     if (!m_model) {
       QMessageBox::warning(this, "Ошибка", "Ошибка открытия модели!\n");
@@ -59,15 +63,15 @@ void MainWindow::on_rotateSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-      case 'x':
-        ui->rotateSlider->setValue(oldX);
-        break;
-      case 'y':
-        ui->rotateSlider->setValue(oldY);
-        break;
-      case 'z':
-        ui->rotateSlider->setValue(oldZ);
-        break;
+    case 'x':
+      ui->rotateSlider->setValue(oldX);
+      break;
+    case 'y':
+      ui->rotateSlider->setValue(oldY);
+      break;
+    case 'z':
+      ui->rotateSlider->setValue(oldZ);
+      break;
     }
   } else {
     if (fileName.isEmpty()) {
@@ -111,15 +115,15 @@ void MainWindow::on_translationSlider_valueChanged() {
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
-      case 'x':
-        ui->translationSlider->setValue(oldX * 100);
-        break;
-      case 'y':
-        ui->translationSlider->setValue(oldY * 100);
-        break;
-      case 'z':
-        ui->translationSlider->setValue(oldZ * 100);
-        break;
+    case 'x':
+      ui->translationSlider->setValue(oldX * 100);
+      break;
+    case 'y':
+      ui->translationSlider->setValue(oldY * 100);
+      break;
+    case 'z':
+      ui->translationSlider->setValue(oldZ * 100);
+      break;
     }
   } else {
     if (fileName.isEmpty()) {
@@ -142,10 +146,8 @@ void MainWindow::on_translationSlider_valueChanged() {
 }
 
 void MainWindow::on_cleanModelButton_clicked() {
-  ui->translationSlider->setValue(0);
-  ui->scaleSlider->setValue(0);
-  ui->rotateSlider->setValue(0);
 
+  cleanPosRotScale();
   ui->proectionBox->setCurrentIndex(0);
   ui->typeDoth->setCurrentIndex(0);
   ui->typeLine->setCurrentIndex(0);
@@ -162,6 +164,14 @@ void MainWindow::on_cleanModelButton_clicked() {
   myGLWidget->lineType = 0;
   myGLWidget->dothType = 0;
 
+  myGLWidget->repaint();
+}
+
+void MainWindow::cleanPosRotScale() {
+  ui->translationSlider->setValue(0);
+  ui->scaleSlider->setValue(0);
+  ui->rotateSlider->setValue(0);
+
   if (fileName.isEmpty()) {
     ui->cleanModelButton->isEnabled();
   } else {
@@ -177,8 +187,6 @@ void MainWindow::on_cleanModelButton_clicked() {
       button->setAutoFillBackground(false);
       button->setFlat(false);
     }
-
-    myGLWidget->repaint();
   }
 }
 

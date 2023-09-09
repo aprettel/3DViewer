@@ -44,117 +44,14 @@
       <property name="spacing">
        <number>-1</number>
       </property>
-      <item row="1" column="3" colspan="2">
-       <widget class="QComboBox" name="proectionBox">
-        <property name="font">
-         <font>
-          <bold>false</bold>
-         </font>
-        </property>
-        <item>
-         <property name="text">
-          <string>Параллельная</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Центральная</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="13" column="3">
-       <widget class="QLabel" name="scale_label">
+      <item row="2" column="1">
+       <widget class="QPushButton" name="saveButton_gif">
         <property name="text">
-         <string>Масштаб модели</string>
+         <string>Сохранить GIF</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="4">
-       <widget class="QComboBox" name="translationBox">
-        <property name="font">
-         <font>
-          <bold>false</bold>
-         </font>
-        </property>
-        <item>
-         <property name="text">
-          <string>x</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>y</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>z</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="10" column="1" colspan="3">
-       <widget class="QSlider" name="translationSlider">
-        <property name="minimum">
-         <number>-100</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="singleStep">
-         <number>0</number>
-        </property>
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="sliderPosition">
-         <number>0</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="tickPosition">
-         <enum>QSlider::TicksAbove</enum>
-        </property>
-        <property name="tickInterval">
-         <number>10</number>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="1" colspan="3">
-       <widget class="QSlider" name="scaleSlider">
-        <property name="minimum">
-         <number>-100</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="sliderPosition">
-         <number>0</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="tickPosition">
-         <enum>QSlider::TicksAbove</enum>
-        </property>
-        <property name="tickInterval">
-         <number>10</number>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="saveButton_img">
-        <property name="text">
-         <string>Сохранить изображение</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" rowspan="16">
+      <item row="0" column="0" rowspan="18">
        <widget class="QWidget" name="screen" native="true">
         <property name="minimumSize">
          <size>
@@ -197,7 +94,222 @@
         </layout>
        </widget>
       </item>
-      <item row="12" column="4">
+      <item row="0" column="3">
+       <widget class="QLabel" name="doth_type_label">
+        <property name="text">
+         <string>Тип точки</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="typeDoth">
+        <item>
+         <property name="text">
+          <string>Отсутствует</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Круг</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Квадрат</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="line_type_label">
+        <property name="text">
+         <string>Тип линии</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="saveButton_img">
+        <property name="text">
+         <string>Сохранить изображение</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="openButton">
+        <property name="maximumSize">
+         <size>
+          <width>190</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Открыть модель</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QComboBox" name="typeLine">
+        <property name="font">
+         <font>
+          <bold>false</bold>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Сплошная</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Пунктирная</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="1" colspan="2">
+       <widget class="QLabel" name="modelInfo_label">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLabel" name="type_proction_label">
+        <property name="text">
+         <string>Тип проекции</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QComboBox" name="proectionBox">
+        <property name="font">
+         <font>
+          <bold>false</bold>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>Параллельная</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Центральная</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="thickness_label">
+        <property name="text">
+         <string>Толщина</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="lineColorButton">
+        <property name="text">
+         <string>Цвет линии</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QSpinBox" name="thicknessBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="dothColorButton">
+        <property name="text">
+         <string>Цвет точек</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="size_label">
+        <property name="text">
+         <string>Размер</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QSpinBox" name="sizeBox">
+        <property name="minimum">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4" colspan="2">
+       <widget class="QPushButton" name="backColorButton">
+        <property name="text">
+         <string>Цвет фона</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLabel" name="transport_label">
+        <property name="text">
+         <string>Перемещение модели</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLabel" name="rotate_label">
+        <property name="text">
+         <string>Поворот модели</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="3">
+       <widget class="QLabel" name="scale_label">
+        <property name="text">
+         <string>Масштаб модели</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="5">
+       <widget class="QComboBox" name="translationBox">
+        <property name="font">
+         <font>
+          <bold>false</bold>
+         </font>
+        </property>
+        <item>
+         <property name="text">
+          <string>x</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>y</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>z</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="9" column="5">
        <widget class="QComboBox" name="rotateBox">
         <property name="minimumContentsLength">
          <number>0</number>
@@ -219,84 +331,67 @@
         </item>
        </widget>
       </item>
-      <item row="8" column="3" colspan="2">
-       <widget class="QPushButton" name="backColorButton">
+      <item row="11" column="5">
+       <widget class="QPushButton" name="cleanModelButton">
         <property name="text">
-         <string>Цвет фона</string>
+         <string>Сброс</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="4">
-       <widget class="QLabel" name="size_label">
-        <property name="text">
-         <string>Размер</string>
+      <item row="7" column="1" colspan="4">
+       <widget class="QSlider" name="translationSlider">
+        <property name="minimum">
+         <number>-100</number>
         </property>
-       </widget>
-      </item>
-      <item row="11" column="3">
-       <widget class="QLabel" name="rotate_label">
-        <property name="text">
-         <string>Поворот модели</string>
+        <property name="maximum">
+         <number>100</number>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="openButton">
-        <property name="maximumSize">
-         <size>
-          <width>190</width>
-          <height>16777215</height>
-         </size>
+        <property name="singleStep">
+         <number>0</number>
         </property>
-        <property name="text">
-         <string>Открыть модель</string>
+        <property name="value">
+         <number>0</number>
         </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QPushButton" name="lineColorButton">
-        <property name="text">
-         <string>Цвет линии</string>
+        <property name="sliderPosition">
+         <number>0</number>
         </property>
-       </widget>
-      </item>
-      <item row="7" column="3">
-       <widget class="QPushButton" name="dothColorButton">
-        <property name="text">
-         <string>Цвет точек</string>
-        </property>
-       </widget>
-      </item>
-      <item row="15" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="2">
-       <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>200</width>
-          <height>20</height>
-         </size>
+        <property name="tickInterval">
+         <number>10</number>
         </property>
-       </spacer>
+       </widget>
       </item>
-      <item row="12" column="1" colspan="3">
+      <item row="11" column="1" colspan="4">
+       <widget class="QSlider" name="scaleSlider">
+        <property name="minimum">
+         <number>-100</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="sliderPosition">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+        <property name="tickInterval">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1" colspan="4">
        <widget class="QSlider" name="rotateSlider">
         <property name="minimum">
          <number>-180</number>
@@ -321,113 +416,18 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="4">
-       <widget class="QLabel" name="thickness_label">
-        <property name="text">
-         <string>Толщина</string>
+      <item row="12" column="1" rowspan="6">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="2">
-       <widget class="QLabel" name="modelInfo_label">
-        <property name="text">
-         <string/>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="saveButton_gif">
-        <property name="text">
-         <string>Сохранить GIF</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3" colspan="2">
-       <widget class="QLabel" name="type_proction_label">
-        <property name="text">
-         <string>Тип проекции</string>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="4">
-       <widget class="QPushButton" name="cleanModelButton">
-        <property name="text">
-         <string>Сброс</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="3">
-       <widget class="QLabel" name="transport_label">
-        <property name="text">
-         <string>Перемещение модели</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QComboBox" name="typeLine">
-        <property name="font">
-         <font>
-          <bold>false</bold>
-         </font>
-        </property>
-        <item>
-         <property name="text">
-          <string>Сплошная</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Пунктирная</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QComboBox" name="typeDoth">
-        <item>
-         <property name="text">
-          <string>Отсутствует</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Круг</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Квадрат</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLabel" name="line_type_label">
-        <property name="text">
-         <string>Тип линии</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QLabel" name="doth_type_label">
-        <property name="text">
-         <string>Тип точки</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="4">
-       <widget class="QSpinBox" name="thicknessBox">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="4">
-       <widget class="QSpinBox" name="sizeBox">
-        <property name="minimum">
-         <number>3</number>
-        </property>
-       </widget>
+       </spacer>
       </item>
      </layout>
     </item>
