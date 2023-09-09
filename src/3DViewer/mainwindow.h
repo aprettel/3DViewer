@@ -60,6 +60,8 @@ private:
   QTimer *timer;
   MyGLWidget *myGLWidget;
   QString fileName;
+  Vertex OldRot = {0, 0, 0};
+  Vertex OldPos = {0, 0, 0};
   struct Model *m_model = NULL;
 };
 

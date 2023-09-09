@@ -55,22 +55,19 @@ void MainWindow::on_openButton_clicked() {
 }
 
 void MainWindow::on_rotateSlider_valueChanged() {
-  static double oldX = 0.0;
-  static double oldY = 0.0;
-  static double oldZ = 0.0;
   static char axis = 'x';
   char setedAxis = ui->rotateBox->currentText().constData()[0].toLatin1();
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
     case 'x':
-      ui->rotateSlider->setValue(oldX);
+      ui->rotateSlider->setValue(OldPos.x);
       break;
     case 'y':
-      ui->rotateSlider->setValue(oldY);
+      ui->rotateSlider->setValue(OldPos.y);
       break;
     case 'z':
-      ui->rotateSlider->setValue(oldZ);
+      ui->rotateSlider->setValue(OldPos.z);
       break;
     }
   } else {
@@ -79,14 +76,14 @@ void MainWindow::on_rotateSlider_valueChanged() {
     } else {
       double rotationAngle = (double)ui->rotateSlider->value();
       if (ui->rotateBox->currentText() == "x") {
-        rotateModel(m_model, rotationAngle - oldX, 0, 0);
-        oldX = rotationAngle;
+        rotateModel(m_model, rotationAngle - OldPos.x, 0, 0);
+        OldPos.x = rotationAngle;
       } else if (ui->rotateBox->currentText() == "y") {
-        rotateModel(m_model, 0, rotationAngle - oldY, 0);
-        oldY = rotationAngle;
+        rotateModel(m_model, 0, rotationAngle - OldPos.y, 0);
+        OldPos.y = rotationAngle;
       } else if (ui->rotateBox->currentText() == "z") {
-        rotateModel(m_model, 0, 0, rotationAngle - oldZ);
-        oldZ = rotationAngle;
+        rotateModel(m_model, 0, 0, rotationAngle - OldPos.z);
+        OldPos.z = rotationAngle;
       }
     }
     myGLWidget->repaint();
@@ -107,22 +104,19 @@ void MainWindow::on_scaleSlider_valueChanged() {
 }
 
 void MainWindow::on_translationSlider_valueChanged() {
-  static double oldX = 0.0;
-  static double oldY = 0.0;
-  static double oldZ = 0.0;
   static char axis = 'x';
   char setedAxis = ui->translationBox->currentText().constData()[0].toLatin1();
   if (axis != setedAxis) {
     axis = setedAxis;
     switch (setedAxis) {
     case 'x':
-      ui->translationSlider->setValue(oldX * 100);
+      ui->translationSlider->setValue(OldPos.x * 100);
       break;
     case 'y':
-      ui->translationSlider->setValue(oldY * 100);
+      ui->translationSlider->setValue(OldPos.y * 100);
       break;
     case 'z':
-      ui->translationSlider->setValue(oldZ * 100);
+      ui->translationSlider->setValue(OldPos.z * 100);
       break;
     }
   } else {
@@ -131,14 +125,14 @@ void MainWindow::on_translationSlider_valueChanged() {
     } else {
       double translationFactor = (double)ui->translationSlider->value() / 100.0;
       if (ui->translationBox->currentText() == "x") {
-        translateModel(m_model, translationFactor - oldX, 0.0, 0.0);
-        oldX = translationFactor;
+        translateModel(m_model, translationFactor - OldPos.x, 0.0, 0.0);
+        OldPos.x = translationFactor;
       } else if (ui->translationBox->currentText() == "y") {
-        translateModel(m_model, 0.0, translationFactor - oldY, 0.0);
-        oldY = translationFactor;
+        translateModel(m_model, 0.0, translationFactor - OldPos.y, 0.0);
+        OldPos.y = translationFactor;
       } else if (ui->translationBox->currentText() == "z") {
-        translateModel(m_model, 0.0, 0.0, translationFactor - oldZ);
-        oldZ = translationFactor;
+        translateModel(m_model, 0.0, 0.0, translationFactor - OldPos.z);
+        OldPos.z = translationFactor;
       }
     }
     myGLWidget->repaint();
@@ -171,6 +165,8 @@ void MainWindow::cleanPosRotScale() {
   ui->translationSlider->setValue(0);
   ui->scaleSlider->setValue(0);
   ui->rotateSlider->setValue(0);
+  OldRot = {0, 0, 0};
+  OldPos = {0, 0, 0};
 
   if (fileName.isEmpty()) {
     ui->cleanModelButton->isEnabled();
