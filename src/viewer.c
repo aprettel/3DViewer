@@ -7,6 +7,7 @@ void rotateModel_Z(struct Model *model, double z_turn);
 
 struct Model *loadModelFromFile(const char *filename) {
   FILE *file = fopen(filename, "r");
+
   char line_file[256];
   struct Model *model = (struct Model *)malloc(sizeof(struct Model));
   model->vertices = NULL;
@@ -109,7 +110,6 @@ void scaleModel(struct Model *model, double scaleFactor) {
     model->vertices[i].y = center.y + (deltaY * scaleFactor);
     model->vertices[i].z = center.z + (deltaZ * scaleFactor);
   }
-  //}
 }
 
 void rotateModel(struct Model *model, double x_turn, double y_turn,
