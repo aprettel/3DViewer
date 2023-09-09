@@ -87,7 +87,7 @@ void MyGLWidget::drawModel(struct Model *model) {
   } else {
     glDisable(GL_LINE_STIPPLE);
   }
-  glEnable(GL_LINE_SMOOTH);
+  //glEnable(GL_LINE_SMOOTH);
   glLineWidth(lineSize);
   glBegin(GL_LINES);
 

@@ -8,6 +8,8 @@
 #define ORTO 0
 #define PERSP 1
 
+
+
 class MyGLWidget : public QOpenGLWidget {
   Q_OBJECT
  public:

@@ -61,13 +61,13 @@ void MainWindow::on_rotateSlider_valueChanged() {
     axis = setedAxis;
     switch (setedAxis) {
     case 'x':
-      ui->rotateSlider->setValue(OldPos.x);
+      ui->rotateSlider->setValue(OldRot.x);
       break;
     case 'y':
-      ui->rotateSlider->setValue(OldPos.y);
+      ui->rotateSlider->setValue(OldRot.y);
       break;
     case 'z':
-      ui->rotateSlider->setValue(OldPos.z);
+      ui->rotateSlider->setValue(OldRot.z);
       break;
     }
   } else {
@@ -76,14 +76,14 @@ void MainWindow::on_rotateSlider_valueChanged() {
     } else {
       double rotationAngle = (double)ui->rotateSlider->value();
       if (ui->rotateBox->currentText() == "x") {
-        rotateModel(m_model, rotationAngle - OldPos.x, 0, 0);
-        OldPos.x = rotationAngle;
+        rotateModel(m_model, rotationAngle - OldRot.x, 0, 0);
+        OldRot.x = rotationAngle;
       } else if (ui->rotateBox->currentText() == "y") {
-        rotateModel(m_model, 0, rotationAngle - OldPos.y, 0);
-        OldPos.y = rotationAngle;
+        rotateModel(m_model, 0, rotationAngle - OldRot.y, 0);
+        OldRot.y = rotationAngle;
       } else if (ui->rotateBox->currentText() == "z") {
-        rotateModel(m_model, 0, 0, rotationAngle - OldPos.z);
-        OldPos.z = rotationAngle;
+        rotateModel(m_model, 0, 0, rotationAngle - OldRot.z);
+        OldRot.z = rotationAngle;
       }
     }
     myGLWidget->repaint();
@@ -206,7 +206,8 @@ void MainWindow::recordGif() {
   static int count = 0;
   if (count < 50) {
     QPixmap pixmap = ui->screen->grab();
-    QImage image = pixmap.toImage().scaled(640, 480, Qt::IgnoreAspectRatio);
+    QImage image =
+        pixmap.toImage().scaled(640, 480, Qt::KeepAspectRatioByExpanding);
     image.save("tmp/" + QString::number(count) + ".bmp");
     count++;
   }

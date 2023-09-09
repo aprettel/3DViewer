@@ -224,34 +224,6 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="5">
-       <widget class="QLabel" name="thickness_label">
-        <property name="text">
-         <string>Толщина</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QSpinBox" name="thicknessBox">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="5">
-       <widget class="QLabel" name="size_label">
-        <property name="text">
-         <string>Размер</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QSpinBox" name="sizeBox">
-        <property name="minimum">
-         <number>3</number>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="4" colspan="2">
        <widget class="QPushButton" name="backColorButton">
         <property name="text">
@@ -444,6 +416,34 @@
        <widget class="QPushButton" name="lineColorButton">
         <property name="text">
          <string>Цвет линии</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLabel" name="thickness_label">
+        <property name="text">
+         <string>Толщина</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QSpinBox" name="sizeBox">
+        <property name="minimum">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QSpinBox" name="thicknessBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLabel" name="size_label">
+        <property name="text">
+         <string>Размер</string>
         </property>
        </widget>
       </item>
