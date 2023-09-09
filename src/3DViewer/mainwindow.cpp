@@ -11,11 +11,16 @@ extern "C" {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  settings = new QSettings("3DViewer", "3DViewer Settings", this);
   myGLWidget = new MyGLWidget(this);
+  load_settings();
   ui->visualLayout->addWidget(myGLWidget);
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  save_settings();
+  delete ui;
+}
 
 void MainWindow::on_openButton_clicked() {
   on_clearZoom_clicked();
@@ -55,13 +60,13 @@ void MainWindow::on_rotateSlider_valueChanged() {
     axis = setedAxis;
     switch (setedAxis) {
     case 'x':
-      ui->rotateSlider->setValue(oldX / M_PI * 180.0);
+      ui->rotateSlider->setValue(oldX);
       break;
     case 'y':
-      ui->rotateSlider->setValue(oldY / M_PI * 180.0);
+      ui->rotateSlider->setValue(oldY);
       break;
     case 'z':
-      ui->rotateSlider->setValue(oldZ / M_PI * 180.0);
+      ui->rotateSlider->setValue(oldZ);
       break;
     }
   } else {
@@ -69,16 +74,15 @@ void MainWindow::on_rotateSlider_valueChanged() {
       ui->rotateSlider->isEnabled();
     } else {
       double rotationAngle = (double)ui->rotateSlider->value();
-      double rotationAngleRad = rotationAngle * M_PI / 180.0;
       if (ui->rotateBox->currentText() == "x") {
-        rotateModel_X(m_model, rotationAngleRad - oldX);
-        oldX = rotationAngleRad;
+        rotateModel(m_model, rotationAngle - oldX, 0, 0);
+        oldX = rotationAngle;
       } else if (ui->rotateBox->currentText() == "y") {
-        rotateModel_Y(m_model, rotationAngleRad - oldY);
-        oldY = rotationAngleRad;
+        rotateModel(m_model, 0, rotationAngle - oldY, 0);
+        oldY = rotationAngle;
       } else if (ui->rotateBox->currentText() == "z") {
-        rotateModel_Z(m_model, rotationAngleRad - oldZ);
-        oldZ = rotationAngleRad;
+        rotateModel(m_model, 0, 0, rotationAngle - oldZ);
+        oldZ = rotationAngle;
       }
     }
     myGLWidget->repaint();
@@ -90,8 +94,8 @@ void MainWindow::on_scaleSlider_valueChanged() {
   if (fileName.isEmpty()) {
     ui->scaleSlider->isEnabled();
   } else {
-    const double scaleFactor = pow(2,(double)ui->scaleSlider->value() / 50.0) ;
-    scaleModel(m_model, scaleFactor/oldScale);
+    const double scaleFactor = pow(2, (double)ui->scaleSlider->value() / 50.0);
+    scaleModel(m_model, scaleFactor / oldScale);
     oldScale = scaleFactor;
 
     myGLWidget->repaint();
@@ -148,7 +152,7 @@ void MainWindow::on_clearZoom_clicked() {
     myGLWidget->setModel(m_model);
 
     normalizeModel(m_model, -1.0, 1.0);
-translateModel(m_model, 0.0, 0.0, -5);
+    translateModel(m_model, 0.0, 0.0, -5);
     myGLWidget->repaint();
   }
 }
@@ -298,4 +302,42 @@ void MainWindow::on_typeDoth_currentIndexChanged(int index) {
   myGLWidget->dothType = index;
   myGLWidget->setModel(m_model);
   myGLWidget->repaint();
+}
+
+void MainWindow::save_settings() {
+  settings->setValue("Color Back", myGLWidget->backColor);
+  settings->setValue("Color Dot", myGLWidget->dothColor);
+  settings->setValue("Color Line", myGLWidget->lineColor);
+  settings->setValue("Type Line", myGLWidget->lineType);
+  settings->setValue("Type Point", myGLWidget->dothType);
+  settings->setValue("Type Projection", myGLWidget->proection_type);
+}
+
+void MainWindow::load_settings() {
+  if (settings->contains("Type Point")) {
+    myGLWidget->dothType = settings->value("Type Point").toInt();
+    ui->typeDoth->setCurrentIndex(settings->value("Type Point").toInt());
+  }
+  if (settings->contains("Type Line")) {
+    myGLWidget->lineType = settings->value("Type Line").toInt();
+    ui->typeLine->setCurrentIndex(settings->value("Type Line").toInt());
+  }
+
+  if (settings->contains("Type Projection")) {
+    myGLWidget->proection_type = settings->value("Type Projection").toInt();
+    ui->proectionBox->setCurrentIndex(
+        settings->value("Type Projection").toInt());
+  }
+  if (settings->contains("Color Back")) {
+    QVariant var = settings->value("Color Back");
+    myGLWidget->backColor = var.value<QColor>();
+  }
+  if (settings->contains("Color Dot")) {
+    QVariant var2 = settings->value("Color Dot");
+    myGLWidget->dothColor = var2.value<QColor>();
+  }
+  if (settings->contains("Color Line")) {
+    QVariant var3 = settings->value("Color Line");
+    myGLWidget->lineColor = var3.value<QColor>();
+  }
 }

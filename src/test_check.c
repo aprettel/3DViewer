@@ -81,9 +81,7 @@ START_TEST(rotation) {
   ref_model = loadModelFromFile(fileName);
   ck_assert(ref_model != NULL);
 
-  rotateModel_X(base_model, -35 * M_PI / 180.0);
-  rotateModel_Z(base_model, -60 * M_PI / 180.0);
-  rotateModel_Y(base_model, 23 * M_PI / 180.0);
+  rotateModel(base_model, -35, 123, 200);
   ck_assert(eqVerts(base_model, ref_model));
 
   collapseModel(base_model);
@@ -238,6 +236,10 @@ int eqVerts(struct Model *m1, struct Model *m2) {
     double dy = fabs(m1->vertices[i].y - m2->vertices[i].y);
     double dz = fabs(m1->vertices[i].z - m2->vertices[i].z);
     eqFlag &= (dx < THRESHOLD) && (dy < THRESHOLD) && (dz < THRESHOLD);
+    if (!eqFlag)
+      printf("%d %lf %lf %lf\n", i, m1->vertices[i].x - m2->vertices[i].x,
+             m1->vertices[i].y - m2->vertices[i].y,
+             m1->vertices[i].z - m2->vertices[i].z);
   }
   return eqFlag;
 }

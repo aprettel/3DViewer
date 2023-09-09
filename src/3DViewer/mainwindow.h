@@ -12,6 +12,8 @@
 #include "myglwidget.h"
 #include "ui_mainwindow.h"
 
+#include <QSettings>
+
 namespace Ui {
 class MainWindow;
 }
@@ -19,11 +21,11 @@ class MainWindow;
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- public:
+public:
   explicit MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
- private slots:
+private slots:
   void on_openButton_clicked();
   void on_scaleSlider_valueChanged();
   void on_translationSlider_valueChanged();
@@ -50,7 +52,11 @@ class MainWindow : public QMainWindow {
   void on_typeLine_currentIndexChanged(int index);
   void on_typeDoth_currentIndexChanged(int index);
 
+  void save_settings();
+  void load_settings();
+
 private:
+  QSettings *settings;
   Ui::MainWindow *ui;
   QTimer *timer;
   MyGLWidget *myGLWidget;
@@ -58,4 +64,4 @@ private:
   struct Model *m_model;
 };
 
-#endif  // MAINWINDOW_H
+#endif // MAINWINDOW_H

@@ -1,5 +1,10 @@
 #include "viewer.h"
 
+void findCenter(struct Vertex *center, struct Model *model);
+void rotateModel_X(struct Model *model, double x_turn);
+void rotateModel_Y(struct Model *model, double y_turn);
+void rotateModel_Z(struct Model *model, double z_turn);
+
 // Загрузка модели из файла
 struct Model *loadModelFromFile(const char *filename) {
   FILE *file = fopen(filename, "r");
@@ -105,52 +110,46 @@ void translateModel(struct Model *model, double x, double y, double z) {
 // Масштаб модели
 void scaleModel(struct Model *model, double scaleFactor) {
   // if (scaleFactor >= -1 && scaleFactor <= 1) {
-  double centerX = 0.0;
-  double centerY = 0.0;
-  double centerZ = 0.0;
+  struct Vertex center = {0, 0, 0};
+  findCenter(&center, model);
 
   for (int i = 0; i < model->numVertices; i++) {
-    centerX += model->vertices[i].x;
-    centerY += model->vertices[i].y;
-    centerZ += model->vertices[i].z;
-  }
+    double deltaX = model->vertices[i].x - center.x;
+    double deltaY = model->vertices[i].y - center.y;
+    double deltaZ = model->vertices[i].z - center.z;
 
-  centerX /= model->numVertices;
-  centerY /= model->numVertices;
-  centerZ /= model->numVertices;
-
-  for (int i = 0; i < model->numVertices; i++) {
-    double deltaX = model->vertices[i].x - centerX;
-    double deltaY = model->vertices[i].y - centerY;
-    double deltaZ = model->vertices[i].z - centerZ;
-
-    model->vertices[i].x = centerX + (deltaX * scaleFactor);
-    model->vertices[i].y = centerY + (deltaY * scaleFactor);
-    model->vertices[i].z = centerZ + (deltaZ * scaleFactor);
+    model->vertices[i].x = center.x + (deltaX * scaleFactor);
+    model->vertices[i].y = center.y + (deltaY * scaleFactor);
+    model->vertices[i].z = center.z + (deltaZ * scaleFactor);
   }
   //}
 }
 
+void rotateModel(struct Model *model, double x_turn, double y_turn,
+                 double z_turn) {
+  struct Vertex center = {0, 0, 0};
+  findCenter(&center, model);
+
+  for (int i = 0; i < model->numVertices; i++) {
+    model->vertices[i].x -= center.x;
+    model->vertices[i].y -= center.y;
+    model->vertices[i].z -= center.z;
+  }
+
+  rotateModel_X(model, x_turn * M_PI / 180.0);
+
+  rotateModel_Z(model, z_turn * M_PI / 180.0);
+  rotateModel_Y(model, y_turn * M_PI / 180.0);
+
+  for (int i = 0; i < model->numVertices; i++) {
+    model->vertices[i].x += center.x;
+    model->vertices[i].y += center.y;
+    model->vertices[i].z += center.z;
+  }
+}
+
 // Поворот по X
 void rotateModel_X(struct Model *model, double x_turn) {
-  double centerX = 0;
-  double centerY = 0;
-  double centerZ = 0;
-  for (int i = 0; i < model->numVertices; i++) {
-    centerX += model->vertices[i].x;
-    centerY += model->vertices[i].y;
-    centerZ += model->vertices[i].z;
-  }
-  centerX /= model->numVertices;
-  centerY /= model->numVertices;
-  centerZ /= model->numVertices;
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x -= centerX;
-    model->vertices[i].y -= centerY;
-    model->vertices[i].z -= centerZ;
-  }
-
   for (int i = 0; i < model->numVertices; i++) {
     double y = model->vertices[i].y;
     double z = model->vertices[i].z;
@@ -159,34 +158,10 @@ void rotateModel_X(struct Model *model, double x_turn) {
     model->vertices[i].y = newY;
     model->vertices[i].z = newZ;
   }
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x += centerX;
-    model->vertices[i].y += centerY;
-    model->vertices[i].z += centerZ;
-  }
 }
 
 // Поворот по Y
 void rotateModel_Y(struct Model *model, double y_turn) {
-  double centerX = 0;
-  double centerY = 0;
-  double centerZ = 0;
-  for (int i = 0; i < model->numVertices; i++) {
-    centerX += model->vertices[i].x;
-    centerY += model->vertices[i].y;
-    centerZ += model->vertices[i].z;
-  }
-  centerX /= model->numVertices;
-  centerY /= model->numVertices;
-  centerZ /= model->numVertices;
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x -= centerX;
-    model->vertices[i].y -= centerY;
-    model->vertices[i].z -= centerZ;
-  }
-
   for (int i = 0; i < model->numVertices; i++) {
     double x = model->vertices[i].x;
     double z = model->vertices[i].z;
@@ -195,34 +170,10 @@ void rotateModel_Y(struct Model *model, double y_turn) {
     model->vertices[i].x = newX;
     model->vertices[i].z = newZ;
   }
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x += centerX;
-    model->vertices[i].y += centerY;
-    model->vertices[i].z += centerZ;
-  }
 }
 
 // Поворот по Z
 void rotateModel_Z(struct Model *model, double z_turn) {
-  double centerX = 0;
-  double centerY = 0;
-  double centerZ = 0;
-  for (int i = 0; i < model->numVertices; i++) {
-    centerX += model->vertices[i].x;
-    centerY += model->vertices[i].y;
-    centerZ += model->vertices[i].z;
-  }
-  centerX /= model->numVertices;
-  centerY /= model->numVertices;
-  centerZ /= model->numVertices;
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x -= centerX;
-    model->vertices[i].y -= centerY;
-    model->vertices[i].z -= centerZ;
-  }
-
   for (int i = 0; i < model->numVertices; i++) {
     double x = model->vertices[i].x;
     double y = model->vertices[i].y;
@@ -230,12 +181,6 @@ void rotateModel_Z(struct Model *model, double z_turn) {
     double newY = x * sin(z_turn) + y * cos(z_turn);
     model->vertices[i].x = newX;
     model->vertices[i].y = newY;
-  }
-
-  for (int i = 0; i < model->numVertices; i++) {
-    model->vertices[i].x += centerX;
-    model->vertices[i].y += centerY;
-    model->vertices[i].z += centerZ;
   }
 }
 
@@ -281,4 +226,15 @@ void collapseModel(struct Model *model) {
   free(model->surfaces);
   free(model->vertices);
   free(model);
+}
+
+void findCenter(struct Vertex *center, struct Model *model) {
+  for (int i = 0; i < model->numVertices; i++) {
+    center->x += model->vertices[i].x;
+    center->y += model->vertices[i].y;
+    center->z += model->vertices[i].z;
+  }
+  center->x /= model->numVertices;
+  center->y /= model->numVertices;
+  center->z /= model->numVertices;
 }
