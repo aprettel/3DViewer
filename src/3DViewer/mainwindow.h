@@ -46,8 +46,8 @@ private slots:
   void on_dothColorButton_clicked();
   void on_backColorButton_clicked();
 
-  void on_thicknessBox_valueChanged(double arg1);
-  void on_sizeBox_valueChanged(double arg1);
+  void on_thicknessBox_valueChanged(int arg1);
+  void on_sizeBox_valueChanged(int arg1);
 
   void on_typeLine_currentIndexChanged(int index);
   void on_typeDoth_currentIndexChanged(int index);

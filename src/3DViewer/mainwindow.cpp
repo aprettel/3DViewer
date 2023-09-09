@@ -195,17 +195,13 @@ void MainWindow::on_saveButton_img_clicked() {
 
   if (!imagePath.isEmpty()) {
     QImage image = ui->screen->grab().toImage();
-
-    // Сохранение изображения в формате BMP
     if (imagePath.endsWith(".bmp", Qt::CaseInsensitive)) {
       if (!image.save(imagePath, "BMP")) {
         QMessageBox::critical(this, "Ошибка",
                               "Ошибка сохранения изображения!\n");
       }
-    }
-    // Сохранение изображения в формате JPEG
-    else if (imagePath.endsWith(".jpg", Qt::CaseInsensitive) ||
-             imagePath.endsWith(".jpeg", Qt::CaseInsensitive)) {
+    } else if (imagePath.endsWith(".jpg", Qt::CaseInsensitive) ||
+               imagePath.endsWith(".jpeg", Qt::CaseInsensitive)) {
       if (!image.save(imagePath, "JPEG")) {
         QMessageBox::critical(this, "Ошибка",
                               "Ошибка сохранения изображения!\n");
@@ -216,7 +212,6 @@ void MainWindow::on_saveButton_img_clicked() {
 
 void MainWindow::makeGif() {
   QString qpath = QFileDialog::getSaveFileName(this, NULL, NULL, "GIF (*.gif)");
-
   if (!qpath.isNull()) {
     std::string tmp = qpath.toStdString();
     const char *path = tmp.c_str();
@@ -245,7 +240,6 @@ void MainWindow::on_proectionBox_currentIndexChanged(int index) {
 
 QColor MainWindow::setColor(QPushButton *button) {
   QColor color = QColorDialog::getColor(Qt::white, this, "Choose color");
-
   if (color.isValid()) {
     QPalette palette = button->palette();
     palette.setColor(QPalette::Button, color);
@@ -281,13 +275,13 @@ void MainWindow::on_backColorButton_clicked() {
   }
 }
 
-void MainWindow::on_thicknessBox_valueChanged(double arg1) {
+void MainWindow::on_thicknessBox_valueChanged(int arg1) {
   myGLWidget->lineSize = arg1;
   myGLWidget->setModel(m_model);
   myGLWidget->repaint();
 }
 
-void MainWindow::on_sizeBox_valueChanged(double arg1) {
+void MainWindow::on_sizeBox_valueChanged(int arg1) {
   myGLWidget->dothSize = arg1;
   myGLWidget->setModel(m_model);
   myGLWidget->repaint();

@@ -7,8 +7,8 @@ MyGLWidget::MyGLWidget(QWidget *parent)
   lineColor = QColor(Qt::red);
   dothColor = QColor(Qt::blue);
   backColor = QColor(50, 50, 50);
-  dothSize = 3.0f;
-  lineSize = 2.0f;
+  lineSize = 1;
+  dothSize = 3;
   dothType = 0;
 }
 
@@ -29,7 +29,6 @@ void MyGLWidget::update_proection_GL(GLdouble aspect) {
   }
   fH = proection_type == PERSP ? tan(fovY / 360 * pi) * zNear : 1.5;
   fW = fH * aspectMem;
-
   repaint();
 }
 
@@ -51,8 +50,8 @@ void MyGLWidget::paintGL() {
     if (proection_type == PERSP)
       glFrustum(-fW, fW, -fH, fH, zNear, zFar);
 
-    glMatrixMode(GL_MODELVIEW); // устанавливаем матрицу
-    glLoadIdentity();           // загружаем матрицу
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
   }
 }
 void MyGLWidget::setModel(struct Model *model) {
@@ -61,7 +60,6 @@ void MyGLWidget::setModel(struct Model *model) {
 }
 
 void MyGLWidget::drawModel(struct Model *model) {
-  // Рисование по точкам
   if (dothType == 1) {
     glEnable(GL_POINT_SMOOTH);
   } else if (dothType == 2) {
@@ -80,10 +78,8 @@ void MyGLWidget::drawModel(struct Model *model) {
     glEnd();
   }
 
-  // Рисование по линиям
   glColor4f(lineColor.redF(), lineColor.greenF(), lineColor.blueF(),
             lineColor.alphaF());
-
   if (lineType == 0) {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0xFFFF);
@@ -93,7 +89,7 @@ void MyGLWidget::drawModel(struct Model *model) {
   } else {
     glDisable(GL_LINE_STIPPLE);
   }
-
+  glEnable(GL_LINE_SMOOTH);
   glLineWidth(lineSize);
   glBegin(GL_LINES);
 
