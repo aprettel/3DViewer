@@ -6,7 +6,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     : QOpenGLWidget(parent), m_model(nullptr) {
   lineColor = QColor(Qt::red);
   dothColor = QColor(Qt::blue);
-  backColor = QColor(50,50,50);
+  backColor = QColor(50, 50, 50);
   dothSize = 3.0f;
   lineSize = 2.0f;
   dothType = 0;
@@ -17,23 +17,13 @@ void MyGLWidget::initializeGL() {
   f->initializeOpenGLFunctions();
   glClearColor(backColor.redF(), backColor.greenF(), backColor.blueF(),
                dothColor.alphaF());
-
-  // proection_type = PERSP;
 }
 
 void MyGLWidget::resizeGL(int width, int height) {
   update_proection_GL((double)width / (double)height);
-  //  widthMem = width;
-  //  heightMem = height;
 }
 
-// void MyGLWidget::forse_resizeGL() {
-//   resizeGL(widthMem,heightMem);
-// }
-
 void MyGLWidget::update_proection_GL(GLdouble aspect) {
-
-  // fH = tan((fovY / 2) / 180 * pi) * zNear;
   if (aspect != 0) {
     aspectMem = aspect;
   }
@@ -41,17 +31,6 @@ void MyGLWidget::update_proection_GL(GLdouble aspect) {
   fW = fH * aspectMem;
 
   repaint();
-
-  /*  glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-
-      if (proection_type == ORTO)
-        glOrtho(-fW, fW, -fH, fH, zNear, zFar);
-      if (proection_type == PERSP)
-        glFrustum(-fW, fW, -fH, fH, zNear, zFar);
-
-      glMatrixMode(GL_MODELVIEW); // устанавливаем матрицу
-      glLoadIdentity();*/ // загружаем матрицу
 }
 
 void MyGLWidget::paintGL() {
