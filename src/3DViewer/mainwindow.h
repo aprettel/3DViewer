@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow {
   void on_scaleSlider_valueChanged();
   void on_translationSlider_valueChanged();
   void on_rotateSlider_valueChanged();
-  void on_clearZoom_clicked();
+  void on_cleanModelButton_clicked();
   void on_translationBox_activated();
   void on_rotateBox_activated();
 

@@ -23,7 +23,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_openButton_clicked() {
-  on_clearZoom_clicked();
+  on_cleanModelButton_clicked();
   fileName = QFileDialog::getOpenFileName(this, tr("Open .obj File"), ".",
                                           tr("OBJ Files (*.obj)"));
   if (!fileName.isEmpty()) {
@@ -141,18 +141,43 @@ void MainWindow::on_translationSlider_valueChanged() {
   }
 }
 
-void MainWindow::on_clearZoom_clicked() {
+void MainWindow::on_cleanModelButton_clicked() {
   ui->translationSlider->setValue(0);
   ui->scaleSlider->setValue(0);
   ui->rotateSlider->setValue(0);
+
+  ui->proectionBox->setCurrentIndex(0);
+  ui->typeDoth->setCurrentIndex(0);
+  ui->typeLine->setCurrentIndex(0);
+
+  ui->sizeBox->setValue(3);
+  ui->thicknessBox->setValue(1);
+
+  myGLWidget->lineColor = QColor(Qt::red);
+  myGLWidget->dothColor = QColor(Qt::blue);
+  myGLWidget->backColor = QColor(50, 50, 50);
+  myGLWidget->proection_type = 0;
+  myGLWidget->lineSize = 1;
+  myGLWidget->dothSize = 3;
+  myGLWidget->lineType = 0;
+  myGLWidget->dothType = 0;
+
   if (fileName.isEmpty()) {
-    ui->clearZoom->isEnabled();
+    ui->cleanModelButton->isEnabled();
   } else {
     m_model = loadModelFromFile(fileName.toStdString().c_str());
     myGLWidget->setModel(m_model);
 
     normalizeModel(m_model, -1.0, 1.0);
     translateModel(m_model, 0.0, 0.0, -5);
+
+    QPushButton *buttons[] = {ui->backColorButton, ui->dothColorButton,
+                              ui->lineColorButton};
+    for (QPushButton *button : buttons) {
+      button->setAutoFillBackground(false);
+      button->setFlat(false);
+    }
+
     myGLWidget->repaint();
   }
 }
